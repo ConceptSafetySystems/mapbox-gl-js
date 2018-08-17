@@ -43,22 +43,35 @@ export type LoadVectorData = (params: WorkerTileParameters, callback: LoadVector
  * @private
  */
 function loadVectorTile(params: WorkerTileParameters, callback: LoadVectorDataCallback) {
-    const request = getArrayBuffer(params.request, (err, response) => {
-        if (err) {
-            callback(err);
-        } else if (response) {
+    // Use mbtiles DB if available
+    if (params.mbTiles) {
+        // console.log("loadVectorTile - use tileData: ",params.tileData);
+        if (params.tileData !== null) {
             callback(null, {
-                vectorTile: new vt.VectorTile(new Protobuf(response.data)),
-                rawData: response.data,
-                cacheControl: response.cacheControl,
-                expires: response.expires
+                vectorTile: new vt.VectorTile(new Protobuf(params.tileData)),
+                rawData: params.tileData
             });
+        } else {
+            callback("mbtiles data is null");
         }
-    });
-    return () => {
-        request.cancel();
-        callback();
-    };
+    } else {
+        const request = getArrayBuffer(params.request, (err, response) => {
+            if (err) {
+                callback(err);
+            } else if (response) {
+                callback(null, {
+                    vectorTile: new vt.VectorTile(new Protobuf(response.data)),
+                    rawData: response.data,
+                    cacheControl: response.cacheControl,
+                    expires: response.expires
+                });
+            }
+        });
+        return () => {
+            request.cancel();
+            callback();
+        };
+    }
 }
 
 /**

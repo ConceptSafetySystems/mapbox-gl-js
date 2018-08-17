@@ -1,31 +1,33 @@
-[<img width="400" alt="Mapbox" src="docs/pages/assets/logo.png">](https://www.mapbox.com/)
+## Purpose
+This fork of Mapbox GL is a small experiment to allow for downloading a remote [MBtiles](https://github.com/mapbox/mbtiles-spec) file and using it as a local vector tile source.
 
-**Mapbox GL JS** is a JavaScript library for interactive, customizable vector maps on the web. It takes map styles that conform to the
-[Mapbox Style Specification](https://www.mapbox.com/mapbox-gl-js/style-spec), applies them to vector tiles that
-conform to the [Mapbox Vector Tile Specification](https://github.com/mapbox/vector-tile-spec), and renders them using
-WebGL.
+MBtiles is basically just an SQlite database with all of the map tiles contained within it. 
 
-Mapbox GL JS is part of the [cross-platform Mapbox GL ecosystem](https://www.mapbox.com/maps/), which also includes
-compatible native SDKs for applications on [Android](https://www.mapbox.com/android-sdk/),
-[iOS](https://www.mapbox.com/ios-sdk/), [macOS](http://mapbox.github.io/mapbox-gl-native/macos),
-[Qt](https://github.com/mapbox/mapbox-gl-native/tree/master/platform/qt), and [React Native](https://github.com/mapbox/react-native-mapbox-gl/). Mapbox provides building blocks to add location features like maps, search, and navigation into any experience you
-create. To get started with GL JS or any of our other building blocks,
-[sign up for a Mapbox account](https://www.mapbox.com/signup/).
+The main reason for wanting to do this was so that we could develop an offline (PWA style) mapping application without needing to individiually store some 30K+ tile files.
 
-In addition to GL JS, this repository contains code, issues, and test fixtures that are common to both GL JS and the
-native SDKs. For code and issues specific to the native SDKs, see the
-[mapbox/mapbox-gl-native](https://github.com/mapbox/mapbox-gl-native/) repository.
+At scale there would definitely be some memory implications because the SQLite db is kept in memory, but for this experiment's purposes it should work fine since it'll only be about a 30MB file.
 
-- [Getting started with Mapbox GL JS](https://www.mapbox.com/mapbox-gl-js/api/)
-- [Tutorials](https://www.mapbox.com/help/tutorials/#web-apps)
-- [API documentation](https://www.mapbox.com/mapbox-gl-js/api/)
-- [Examples](https://www.mapbox.com/mapbox-gl-js/examples/)
-- [Style documentation](https://www.mapbox.com/mapbox-gl-js/style-spec/)
-- [Open source styles](https://github.com/mapbox/mapbox-gl-styles)
-- [Roadmap](https://www.mapbox.com/mapbox-gl-js/roadmap/)
-- [Contributor documentation](https://github.com/mapbox/mapbox-gl-js/blob/master/CONTRIBUTING.md)
+## SQL.JS Work-around
+* https://github.com/kripken/sql.js/
+* https://raw.githubusercontent.com/kripken/sql.js/master/js/sql.js
+Unfortunately there's some weird issue with directly building the source with SQL.js included in the project. It causes out of memory failures in the build process, and even if you work-around that, it gets stuck in an infinite loop. In short it wasn't worth fixing at this time, and so instead you just have to directly include sql.js in the front-end code.
 
-[<img width="981" alt="Mapbox GL gallery" src="docs/pages/assets/gallery.png">](https://www.mapbox.com/gallery/)
+## Demo example
+See the example in [demo-mbtiles]. You'll need to update some of the hard-coded URLs for it to work in your environment. Make sure to search for 'localhost' in omt.style.json and metadata.json.
+
+## Docs
+See the original Mapbox GL JS Github for full documentation [https://github.com/mapbox/mapbox-gl-js]
+
+See [CONTRIBUTING.md] for development instructions, or in very short for development:
+```bash
+yarn install
+yarn run start-debug
+```
+
+Then to create the production dist files:
+```bash
+yarn build-min
+```
 
 ## License
 

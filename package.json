@@ -29,6 +29,7 @@
     "gl-matrix": "^2.6.1",
     "gray-matter": "^3.0.8",
     "grid-index": "^1.0.0",
+    "gzip-js": "^0.3.2",
     "minimist": "0.0.8",
     "pbf": "^3.0.5",
     "quickselect": "^1.0.0",

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>MapBox GL Offline</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link rel="stylesheet" type="text/css" href="../dist/mapbox-gl.css" />
+    <script src="../dist/mapbox-gl-dev.js"></script>
+    <script src="sql.js"></script>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+<div id='map'></div>
+
+<script>
+
+/**
+ * Creates Mapbox viewer
+ * @param {string} div
+ * @param {Array} bbox
+ * @param {string} raw_style
+ * @param {string} context_style
+ * @param {string=} opacity_layer
+ */
+var createMap = function(div, bbox, raw_style, context_style, opacity_layer, min_zoom, max_zoom) {
+
+  var map = new mapboxgl.Map({
+    container: div,
+    style: raw_style,
+    attributionControl: true,
+    hash: true,
+    center: [153.020984, -27.47224],
+    zoom: 14
+  });
+  map.addControl(new mapboxgl.NavigationControl());
+
+  var slider = document.getElementById('slider');
+  var showContextWrap = document.getElementById('show-context');
+  var showContext = document.getElementById('show-context-checkbox');
+
+  map.once('load', function() {
+    if (map.getZoom() < min_zoom && !showContext.checked) {
+      map.setZoom(min_zoom);
+    }
+  });
+};
+
+createMap(
+  'map',
+  undefined,
+  // raw_style
+  "omt.style.json",
+  // context_style
+  undefined,
+  // opacity_layer
+  undefined,
+  0,
+  14
+);
+
+</script>
+
+</body>
+</html>
