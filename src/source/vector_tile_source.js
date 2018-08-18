@@ -138,20 +138,21 @@ class VectorTileSource extends Evented implements Source {
 
                 // Check if the tile source is a single mbtiles file, then pre-load the database
                 if (this.isMbtilesSource(tileJSON)) {
+                    let self = this;
                     // console.log("loading mbtiles file: " + tileJSON.tiles[0]);
                     const mbtilesUrl = this.getUrlFromMbtiles(tileJSON.tiles[0]);
                     // console.log("URL only", mbtilesUrl);
-                    let xhr = new XMLHttpRequest();
-                    xhr.open('GET', mbtilesUrl, true);
-                    xhr.responseType = 'arraybuffer';
-
-                    xhr.onload = e => {
-                        // console.log("got db");
-                        const uInt8Array = new Uint8Array(xhr.response);
-                        this.mbTilesDb = new SQL.Database(uInt8Array);
-                        loaded();
-                    };
-                    xhr.send();
+                    fetch(mbtilesUrl, { method: 'GET' })
+                        .then(function (response) { return response.arrayBuffer(); })
+                        .then(function (buffer) {
+                            // console.log("got db");
+                            const uInt8Array = new Uint8Array(buffer);
+                            self.mbTilesDb = new SQL.Database(uInt8Array);
+                            loaded();
+                        })
+                        .catch(function (error) {
+                            console.log('Failed to fetch tiles data', error);
+                        });
                 } else {
                     loaded();
                 }
