@@ -13,10 +13,10 @@ At scale there would definitely be some memory implications because the SQLite d
 Unfortunately there's some weird issue with directly building the source with SQL.js included in the project. It causes out of memory failures in the build process, and even if you work-around that, it gets stuck in an infinite loop. In short it wasn't worth fixing at this time, and so instead you just have to directly include sql.js in the front-end code.
 
 ## Demo example
-See the example in [demo-mbtiles]. You'll need to update some of the hard-coded URLs for it to work in your environment. Make sure to search for 'localhost' in omt.style.json and metadata.json.
+See the example in [demo-mbtiles](./demo-mbtiles). You'll need to update some of the hard-coded URLs for it to work in your environment. Make sure to search for 'localhost' in omt.style.json and metadata.json.
 
 ## Docs
-See the original Mapbox GL JS Github for full documentation [https://github.com/mapbox/mapbox-gl-js]
+See the original [Mapbox GL JS Github](https://github.com/mapbox/mapbox-gl-js) for full documentation 
 
 See [CONTRIBUTING.md] for development instructions, or in very short for development:
 ```bash

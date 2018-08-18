@@ -52,7 +52,7 @@
       }
    },
    "sprite":"http://localhost:8000/mapboxgl2-mbtile/mboxgl2/demo-mbtiles/sprite/sprite",
-   "glyphs":"http://localhost:8000/mapboxgl2-mbtile/mboxgl2/demo-mbtiles/klokantech-gl-fonts-master/KlokanTech {fontstack}/{range}.pbf",
+   "glyphs":"http://localhost:8000/mapboxgl2-mbtile/mboxgl2/demo-mbtiles/klokantech-gl-fonts-master/KlokanTech {fontstack}/{range}.pbfz.zip",
    "layers":[
       {
          "id":"background",

@@ -16,7 +16,7 @@ function dirToFlatArray($dir)
             else
             {            
                 $ext = pathinfo($fullPath, PATHINFO_EXTENSION);
-                if ($ext == "pbfpbf")
+                if ($ext == "zip")
                 {
                     $result[] = $fullPath;
                 }
@@ -36,6 +36,6 @@ $arr = dirToFlatArray($inputDir);
 $x = 1;
 foreach ($arr as $src)
 {
-    $dst = str_replace("pbfpbf", "pbf", $src);
+    $dst = str_replace("..pbfz.zip", ".pbfz.zip", $src);
     rename($src, $dst);    
 }
